@@ -15,3 +15,12 @@
     --background-end-rgb: 0, 0, 0;
   }
 }
+
+body{
+  display: flex;
+  flex-direction: row;
+}
+
+.Fonction{
+  width: calc(100vw - 300px);
+}
