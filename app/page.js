@@ -103,7 +103,6 @@ async function GetModel(propsjson){
         },
         body: JSON.stringify(propsjson)
     })
-    console.log(propsjson);
     const json = await data.json()
     return json
 }
