@@ -27,19 +27,22 @@ export async function POST(req, res) {
         instance_prompt: body.instance_prompt,
         max_train_steps: parseInt(body.max_train_steps),
         instance_data: "https://dl.dropboxusercontent.com/s/bs3rp64lpmgs06f/data.zip?dl=0",
-        ckpt_base: "https://huggingface.co/SG161222/Realistic_Vision_V2.0/resolve/main/Realistic_Vision_V2.0.ckpt",
+        ckpt_base: body.ckpt,
         num_class_images: parseInt(body.num_class_image),
-        learning_rate: parseInt(body.learning_rate)
+        learning_rate: parseFloat(body.learning_rate),
+        resolution: parseInt(body.resolution)
     }
 
     console.log(input);
 
-    let output;
-    let FINAL_MODEL;
+    let FINAL_MODEL
+    let DIRECT_LINK_ZIP
     try{
-        output = await replicate.run(model, {input})
-        FINAL_MODEL = await output.json();
-        FINAL_MODEL.modelget = true
+        DIRECT_LINK_ZIP = await replicate.run(model, {input})
+        FINAL_MODEL = {
+            link : DIRECT_LINK_ZIP,
+            modelget : true
+        }
     } catch(e) {
         FINAL_MODEL = {
             error: e.message,
