@@ -23,18 +23,33 @@ export default function TrainingModel() {
     const [Loading, setLoading] = useState(false)
     const [Training, setTraining] = useState("")
 
+    const [apikey, setapikey] = useState("0e9e8751b5d2a94da022d952f53299317f689813")
+    const [instanceprompt, setinstanceprompt] = useState("a sks woman")
+    const [] = useState()
+    const [] = useState()
+    const [] = useState()
+    const [] = useState()
+    const [] = useState()
+
+
     const handleOnSubmit = async (event) => {
         event.preventDefault()
         toast.success('Training model in progress...')
         setLoading(true)
 
         const EventJson = DataJson(event)
-
         const data = await GetModel(EventJson)
 
-        setLoading(false)
-        toast.success('Training model completed')  
-        setTraining('https://huggingface.co/wavymulder/Analog-Diffusion/resolve/main/analog-diffusion-1.0.ckpt')     
+        if(data.modelget){
+            setLoading(false)
+            toast.success('Training model completed')  
+            setTraining("SUCCES") 
+        } else {
+            setLoading(false)
+            toast.error(data.error)  
+            setTraining("ERROR")
+        }   
+        console.log();
     }
 
     return (
@@ -45,16 +60,16 @@ export default function TrainingModel() {
                 </h1>
             </div>
             <form className='flex flex-col justify-center gap-5 border-b border-gray-900/10 pb-12' onSubmit={handleOnSubmit}  >
-                <TextInput title='API KEY' placeholder='Replicate API...' />
+                <TextInput title='API KEY' placeholder='Replicate API...' value={apikey} onChange={(e) => setapikey(e.target.value)}/>
                 <ComboboxSearch people={people} title="CKPT" />
                 <TextInput title='PICTURE FOR TRAINING' placeholder='Enter a direct link download in .zip...' />
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-                    <TextInput title='Instance prompt' placeholder='a photo of sks woman...' />
-                    <TextInput title='Class prompt' placeholder='a photo of a woman...' />
-                    <TextInput title='Num class image' placeholder='Adding picture for train...' />
-                    <TextInput title='Resolution' placeholder='In pixels...' />
-                    <TextInput title='Max train steps' placeholder='Time of training...' />
-                    <TextInput title='Learning rate' placeholder='Epsilon...' />
+                    <TextInput title='Instance prompt' placeholder='a photo of sks woman...' value={instanceprompt} onChange={(e) => setinstanceprompt(e.target.value)} />
+                    <TextInput title='Class prompt' placeholder='a photo of a woman...' value="a woman"/>
+                    <TextInput title='Num class image' placeholder='Adding picture for train...' value={50}/>
+                    <TextInput title='Resolution' placeholder='In pixels...' value={512} />
+                    <TextInput title='Max train steps' placeholder='Time of training...' value={2000} />
+                    <TextInput title='Learning rate' placeholder='Epsilon...' value={0.000001} />
                 </div>
                 <div className='flex flex-col items-center mt-5' >
                     <button

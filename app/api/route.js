@@ -34,18 +34,20 @@ export async function POST(req, res) {
 
     console.log(input);
 
-    const output = await replicate.run(model, {input});
-
+    let output;
     let FINAL_MODEL;
     try{
+        output = await replicate.run(model, {input})
         FINAL_MODEL = await output.json();
+        FINAL_MODEL.modelget = true
     } catch(e) {
         FINAL_MODEL = {
-            error: e
+            error: e.message,
+            modelget : false
         };
     }
 
-    return NextResponse.json({
-        test: "hello"
-    })
+    return NextResponse.json(
+        FINAL_MODEL
+    )
 }
