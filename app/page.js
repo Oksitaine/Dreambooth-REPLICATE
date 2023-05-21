@@ -129,6 +129,7 @@ function DataJson(event){
 
 // Function send json data to api for get final link model
 async function GetModel(propsjson){
+    console.log('Lancement de la réquete API');
     const data = await fetch('/api', {
         method: 'POST',
         headers: {
@@ -136,6 +137,8 @@ async function GetModel(propsjson){
         },
         body: JSON.stringify(propsjson)
     })
+    console.log('Data effectuer, on lance le json...');
     const json = await data.json()
+    console.log('Json effectuer, on retourne le json...');
     return json
 }
