@@ -4,6 +4,7 @@ For training a model with dreambooth in replicate, you can make one theoreticall
 So, i made my own dashboard for create a `output.zip` and after use this output for create picture with Stable Diffusion.  
   
 You can see [DEMO](https://nextapp-one-peach.vercel.app/) of this dashboard.  
+
 ⚠️ Don't use DEMO for create training model, it's not work because i use cloud function in VERCEL with a timeout of 10 secondes. Clone and use this dashboard in your local machine.
 
 ![Picture of Home Page](./ReadMe/HomePage.png)
