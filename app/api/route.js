@@ -1,11 +1,7 @@
 import { NextResponse, NextRequest } from "next/server"
 import Replicate from "replicate";
 
-export function API(api){
-    return new Replicate({
-        auth : api
-    })
-}
+export const runtime = "edge"
 
 const model = "replicate/dreambooth:a8ba568da0313951a6b311b43b1ea3bf9f2ef7b9fd97ed94cebd7ffd2da66654"
 
