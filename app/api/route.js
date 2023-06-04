@@ -1,7 +1,7 @@
 import { NextResponse, NextRequest } from "next/server"
 import Replicate from "replicate";
 
-export const runtime = "edge"
+export const runtime = "nodejs"
 
 const model = "replicate/dreambooth:a8ba568da0313951a6b311b43b1ea3bf9f2ef7b9fd97ed94cebd7ffd2da66654"
 
@@ -22,7 +22,7 @@ export async function POST(req, res) {
         class_prompt: body.class_prompt,
         instance_prompt: body.instance_prompt,
         max_train_steps: parseInt(body.max_train_steps),
-        instance_data: "https://dl.dropboxusercontent.com/s/bs3rp64lpmgs06f/data.zip?dl=0",
+        instance_data: body.instance_data,
         ckpt_base: body.ckpt,
         num_class_images: parseInt(body.num_class_image),
         learning_rate: parseFloat(body.learning_rate),
