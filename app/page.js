@@ -9,13 +9,15 @@ import { toast } from 'react-hot-toast'
 const people = [
     { id: 1, name: 'Analog Diffusion' },
     { id: 2, name: 'Dreamlike Photoreal 2.0' },
-    { id: 3, name: 'Realistic Vision 2.0' }
+    { id: 3, name: 'Realistic Vision 2.0' },
+    { id: 4, name: 'Realistic Vision 3.0' }
 ]
 
 const CKPT = [
     { id: 1, cpkt:'https://huggingface.co/wavymulder/Analog-Diffusion/resolve/main/analog-diffusion-1.0.ckpt' },
     { id: 2, cpkt:'https://huggingface.co/dreamlike-art/dreamlike-photoreal-2.0/resolve/main/dreamlike-photoreal-2.0.ckpt'},
-    { id: 3, cpkt:'https://huggingface.co/SG161222/Realistic_Vision_V2.0/resolve/main/Realistic_Vision_V2.0.ckpt' }
+    { id: 3, cpkt:'https://huggingface.co/SG161222/Realistic_Vision_V2.0/resolve/main/Realistic_Vision_V2.0.ckpt' },
+    { id: 4, cpkt:'https://huggingface.co/SG161222/Realistic_Vision_V3.0_VAE/resolve/main/Realistic_Vision_V3.0.ckpt' }
 ]
 
 export default function TrainingModel() {
@@ -23,7 +25,8 @@ export default function TrainingModel() {
     const [Loading, setLoading] = useState(false)
     const [Training, setTraining] = useState("")
 
-    const [apikey, setapikey] = useState()
+    const [instance_data, setinstance_data] = useState("erge")
+    const [apikey, setapikey] = useState("")
     const [instanceprompt, setinstanceprompt] = useState("a sks woman")
     const [classprompt, setclassprompt] = useState("a woman")
     const [numclass, setnumclass] = useState(50)
@@ -62,7 +65,7 @@ export default function TrainingModel() {
             <form className='flex flex-col justify-center gap-5 border-b border-gray-900/10 pb-12' onSubmit={handleOnSubmit}  >
                 <TextInput title='API KEY' placeholder='Replicate API...' value={apikey} onChange={(e) => setapikey(e.target.value)}/>
                 <ComboboxSearch people={people} title="CKPT" />
-                <TextInput title='PICTURE FOR TRAINING' placeholder='Enter a direct link download in .zip...' />
+                <TextInput title='PICTURE FOR TRAINING' placeholder='Enter a direct link download in .zip...' value={instance_data} onChange={(e) => setinstance_data(e.target.value)} />
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
                     <TextInput title='Instance prompt' placeholder='a photo of sks woman...' value={instanceprompt} onChange={(e) => setinstanceprompt(e.target.value)} />
                     <TextInput title='Class prompt' placeholder='a photo of a woman...' value={classprompt} onChange={(e) => setclassprompt(e.target.value)}/>
@@ -107,6 +110,9 @@ function DataJson(event){
         case "Realistic Vision 2.0":
             ckptlink = CKPT[2].cpkt
             break;
+        case "Realistic Vision 3.0":
+            ckptlink = CKPT[3].cpkt
+            break;
         default:
             ckptlink = "ERREUR"
             break;
@@ -115,7 +121,7 @@ function DataJson(event){
     const Eventjson = {
         "api_key": event.target[0].value,
         "ckpt": ckptlink,
-        "picture": event.target[3].value,
+        "instance_data": event.target[3].value,
         "instance_prompt": event.target[4].value,
         "class_prompt": event.target[5].value,
         "num_class_image": event.target[6].value,
@@ -124,7 +130,6 @@ function DataJson(event){
         "learning_rate": event.target[9].value
     }
     return Eventjson
-
 }
 
 // Function send json data to api for get final link model
