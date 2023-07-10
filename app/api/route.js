@@ -29,8 +29,6 @@ export async function POST(req, res) {
         resolution: parseInt(body.resolution)
     }
 
-    console.log(input);
-
     let FINAL_MODEL
     let DIRECT_LINK_ZIP
     try{
